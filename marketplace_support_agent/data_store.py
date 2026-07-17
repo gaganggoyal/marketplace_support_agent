@@ -49,6 +49,7 @@ ORDERS = {
             {"name": "Puma Running Shoes (UK 9)", "qty": 1, "price_inr": 3499}
         ],
         "amount_inr": 3499,
+        "current_price_inr": 2999,  # dropped after ordering — price-protection demo
         "payment_method": "UPI",
         "status": "shipped",
         "order_date": _d(2),
@@ -104,18 +105,22 @@ POLICIES = {
     "returns": (
         "Items can be returned within the return window shown on the order "
         "(typically 7-14 days from delivery, category dependent). Items must "
-        "be unused, with tags/packaging intact. Pickup is scheduled free of "
-        "charge within 24-48 hours of the return request."
+        "be unused with the BRAND packaging and tags intact; the outer "
+        "shipping carton is not required. Pickup is scheduled free of charge "
+        "within 24-48 hours of the return request."
     ),
     "refunds": (
-        "Refunds are issued to the original payment method within 5-7 business "
-        "days after the returned item passes quality check. Cash-on-delivery "
-        "orders are refunded to the customer's bank account or wallet."
+        "Refunds always include the full amount paid, including shipping and "
+        "handling fees, regardless of the return reason. Refunds go to the "
+        "original payment method within 5-7 business days of the pickup "
+        "scan; cash-on-delivery orders are refunded to the customer's choice "
+        "of bank/UPI or wallet."
     ),
     "cancellations": (
         "Orders can be cancelled free of charge any time before they are "
-        "shipped. Once shipped, the customer can refuse delivery or request "
-        "a return after delivery."
+        "shipped — instantly, with a full refund. Once shipped, the customer "
+        "can refuse delivery at the door and the refund starts when the "
+        "courier scans the returned package."
     ),
     "replacements": (
         "Damaged, defective, or wrong items are eligible for free replacement "
@@ -125,9 +130,32 @@ POLICIES = {
     "warranty": (
         "Electronics carry the manufacturer's warranty (typically 1 year). "
         "After the marketplace return window closes, warranty claims are "
-        "handled directly by authorised brand service centres."
+        "handled by authorised brand service centres; support shares the "
+        "service-centre contacts and invoice, and steps in if the brand is "
+        "unresponsive."
+    ),
+    "price-protection": (
+        "If the price of an ordered item drops within 48 hours of placing "
+        "the order, the difference is refunded on request after "
+        "verification against price history."
     ),
 }
+
+# Demo customer account profile — in production this comes from the
+# customer/risk platform.
+ACCOUNT = {
+    "customer_email": "demo.customer@example.com",
+    "registered_phone_last4": "4242",
+    "account_age_years": 15,
+    "return_rate_percent": 4,
+    "trusted": True,  # >1yr old, low return rate → instant-refund eligible
+    "vip": True,  # high lifetime value → priority queues, same rules
+    "goodwill_credits_this_quarter": 1,  # cap is 3 per quarter
+    "returnless_replacements_this_month": 0,
+    "orders_this_month": 6,
+}
+
+INVESTIGATIONS: dict[str, dict] = {}
 
 _ticket_counter = 5000
 
@@ -136,3 +164,9 @@ def next_ticket_id() -> str:
     global _ticket_counter
     _ticket_counter += 1
     return f"TKT-{_ticket_counter}"
+
+
+def next_case_id() -> str:
+    global _ticket_counter
+    _ticket_counter += 1
+    return f"CASE-{_ticket_counter}"

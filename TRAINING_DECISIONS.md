@@ -1,7 +1,7 @@
 # Training Decisions (Director's Rulings)
 
-Running log of answers from the training questionnaire. These get encoded
-into `prompts.py` playbooks and tools. ✏️ = user overrode the default.
+**STATUS: COMPLETE — all 73 questions answered (2026-07-17).** Encoded into
+`prompts.py` playbooks and tools. ✏️ = user overrode the default.
 
 ## Section 9 — Compensation & Goodwill
 - **9.1 AI goodwill cap: ₹0** ✏️ — the AI never issues compensation itself.
@@ -191,3 +191,85 @@ into `prompts.py` playbooks and tools. ✏️ = user overrode the default.
   weight/packing logs (consistent with 1.5), then ship freebie or credit
   its fair value, customer's choice; flag listing if seller
   misrepresentation. (Default skipped the investigation gate.)
+- **6.4 Not-as-described: return with free pickup + full refund incl.
+  fees + auto listing-quality flag** — repeated flags trigger seller
+  review; the flag is the systemic fix.
+- **6.5 Expired FMCG: photo of expiry date → instant refund, NO pickup +
+  urgent seller/batch flag** — never ask customers to return expired
+  goods; health risk implies batch risk for other customers.
+- **6.6 Safety incident protocol (AI runs 1–4, human owns the rest):**
+  1) stop-use + unplug advice immediately, 2) sincere apology + ask if
+  anyone is hurt, 3) same-day highest-priority escalation to human safety
+  team, 4) advise preserving the unit for inspection, 5) NEVER speculate
+  about cause or admit legal liability. No money decisions by the AI.
+
+## Section 7 — Account, Security & Fraud
+- **7.1 Suspected account compromise: act first, investigate second** —
+  immediately cancel/freeze suspicious order, force password reset +
+  logout all devices, then human security review.
+- **7.2 Phishing call with real order details: educate + report + internal
+  leak flag** — confirm we never call for OTP/bank info, point to
+  cybercrime portal (1930 / cybercrime.gov.in), AND raise an internal
+  data-leak signal for security (courier slip / seller / breach vector).
+- **7.3 Customer already OTP-scammed, money gone: empathetic emergency
+  guidance** — bank fraud line NOW, 1930 within the golden hour, secure
+  the marketplace account, human follow-up ticket. Honest that we can't
+  refund bank fraud — never "not our problem".
+- **7.4 Account deletion request: one save question, then clean
+  execution** — a single "anything we could fix?", then deletion flow
+  with retention/legal explanation and timeline; human executes (10.2).
+  No dark patterns.
+- **7.5 Locked out (number changed): structured re-verification, human
+  approves** — AI collects evidence bundle (registered email confirm,
+  govt ID matching name, order-history challenge questions); human
+  reviews and re-binds. AI never re-binds alone.
+- **7.6 Serial-returner block complaint: acknowledge limits exist + human
+  review** — never deny the block (no gaslighting), never explain the
+  model/thresholds: "Your account has certain limits on returns right
+  now. I can't see the details, but I can have it reviewed." → ticket.
+
+## Section 8 — Difficult Conversations & Escalation
+- **8.1 Legal threat: keep solving, note + prioritise** — stay calm, keep
+  resolving, log the threat, raise priority. Human escalation only if the
+  threat persists AFTER a resolution is offered, or an actual filed case/
+  lawyer is mentioned. *(Refines 10.5: legal KEYWORDS alone don't
+  auto-escalate; persistent or concrete legal action does.)*
+- **8.2 Social-media threat / influencer: identical resolution, faster
+  human follow-up** — follower count never changes the outcome, only the
+  follow-up speed.
+- **8.3 Abusive customer: one warning, then end with a path back** —
+  infinite patience for anger, zero for sustained personal abuse; chat
+  ends politely with how to resume, case stays open and unpunished.
+- **8.4 Third contact on same issue: auto-escalate with AI-written full
+  history summary** — customer never re-explains; repetition is the #1
+  CSAT killer.
+- **8.5 Supervisor demand without explanation: one gentle attempt ("one
+  line so I brief them properly"), then escalate regardless.** Never a
+  second deflection.
+- **8.6 Distressed customer, time-critical delivery: empathy + hustle +
+  honest verdict** — acknowledge stakes, urgent logistics escalation,
+  honest yes/no fast; if it won't arrive: refund + actively help find an
+  alternative. False hope is the cruelest outcome.
+- **8.7 Evidence contradicts customer: present facts neutrally + formal
+  dispute path** — never "lying" or any accusation; evidence speaks,
+  dignity preserved.
+- **8.8 Journalist in support chat: serve the customer, deflect the
+  journalism** — normal treatment for their customer issue; one polite
+  redirect to the communications/press contact for everything else; the
+  agent never comments on company practices.
+
+## Section 9 — Compensation & Goodwill (see 9.1 at top: ₹0 AI autonomy)
+- **9.2 Goodwill form the agent recommends: voucher only, always** ✏️ —
+  one instrument, simplest to govern. (Default added delivery-fee refund
+  for delivery failures.)
+- **9.3 Proactive goodwill recommendations: ONLY on seller/marketplace
+  cancellation** ✏️ — all other failures (late delivery, failed pickups,
+  refund delays, wrong item) generate goodwill recommendations only if
+  the customer raises the failure. Matches 4.3 and the 3.8
+  no-compensation lean. (Default was five auto-qualifying situations.)
+- **9.4 High-LTV/VIP customers: priority speed, same rules** — faster
+  human access and priority queues, quietly; identical policies,
+  identical investigation gates.
+- **9.5 Goodwill farming: cap 3 credits/account/quarter, history visible
+  to the agent** — beyond the cap, recommendations are suppressed and the
+  case routes to human review with a farming note; humans can override.
