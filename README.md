@@ -11,6 +11,11 @@ rule in [prompts.py](marketplace_support_agent/prompts.py) traces to a
 numbered ruling in [TRAINING_DECISIONS.md](TRAINING_DECISIONS.md) (the full
 questionnaire is in [TRAINING_QUESTIONNAIRE.md](TRAINING_QUESTIONNAIRE.md)).
 
+> **Transparent about the build:** the code is AI pair-programmed — a
+> workflow I trained myself in — but all 73 rulings are mine, made one
+> scenario at a time. [The paper trail ↓](#who-decided-all-this) · Portfolio:
+> [gagan.indiaoffers.in](https://gagan.indiaoffers.in)
+
 ## Architecture
 
 ```
@@ -131,3 +136,32 @@ TRAINING_QUESTIONNAIRE.md         # the 73 scenarios
 TRAINING_DECISIONS.md             # the 73 rulings (source of truth)
 deploy.sh                         # adk deploy agent_engine
 ```
+
+## Who decided all this
+
+Being open about it: the code was written AI-first, with AI pair-programming.
+The judgment wasn't. I sat through all 73 scenarios in
+[TRAINING_QUESTIONNAIRE.md](TRAINING_QUESTIONNAIRE.md) — as someone who has
+ordered from these marketplaces nearly daily for 15 years — and ruled on each
+one. The rulings that define this agent are the opposite of scaffold
+defaults:
+
+- **₹0 money autonomy** — an AI should never hand out compensation, so it
+  can only *recommend* goodwill and a human approves; the 3-per-quarter
+  farming cap is enforced in code, not in the prompt.
+- **Investigate first, then be generous** — every loss claim opens a tracked
+  case with an ID and a deadline before any refund, because instant refunds
+  train fraudsters faster than they win customers.
+- **All fees always refunded** and **48-hour price protection** — the two
+  policies that made me loyal to the platforms that practise them.
+
+Every rule in [prompts.py](marketplace_support_agent/prompts.py) carries its
+ruling number, so you can trace any behaviour back to the decision — and to
+me. That traceability is the point: AI wrote it fast, but nothing here is
+unexamined.
+
+---
+
+**Gagandeep Goyal** — e-commerce operator (10+ years), building AI agents on
+Google's ADK. Portfolio: [gagan.indiaoffers.in](https://gagan.indiaoffers.in)
+· GitHub: [@gaganggoyal](https://github.com/gaganggoyal)
