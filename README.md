@@ -1,5 +1,9 @@
 # Marketplace Support Agent
 
+[![CI](https://github.com/gaganggoyal/marketplace_support_agent/actions/workflows/ci.yml/badge.svg)](https://github.com/gaganggoyal/marketplace_support_agent/actions/workflows/ci.yml)
+[![Python 3.10–3.12](https://img.shields.io/badge/python-3.10%E2%80%933.12-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 A customer-support agent for e-commerce marketplaces (Amazon/Flipkart style),
 built with Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/)
 and deployable to Vertex AI Agent Engine.
@@ -109,6 +113,33 @@ Prompts that exercise the playbook:
 - "Give me a voucher for the late delivery" *(should apologise, not pay)*
 - "Cancel AMZ-10087" / "What's your refund policy?" / "I want a human"
 
+## Tested — including the security path
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
+Identity verification gates access to another customer's order details, so I
+attacked it directly. The original contact check matched any input ending in
+the registered phone's last 4 digits — an **identity-verification bypass**
+that's now fixed and locked down by tests
+([tests/test_verification.py](tests/test_verification.py)):
+
+| Input | Before | Now |
+|---|---|---|
+| `9999994242` (unrelated number ending 4242) | ✅ verified — **account-data leak** | ❌ rejected |
+| `hacker4242` (arbitrary string ending 4242) | ✅ verified | ❌ rejected |
+| `4242` (the bare last-4) | ✅ verified | ❌ rejected |
+| `demo.customer@example.com` (real email) | ✅ verified | ✅ verified |
+| `+91 98123 04242` (real full phone, any formatting) | — | ✅ verified |
+
+Verification now requires the **full** registered phone (digits compared,
+formatting ignored) or an exact email match. The rest of the suite covers
+returns/refunds/cancellation state transitions — no return before delivery,
+no double return, no cancelling a shipped order, refund-status needs a
+return — against a store reset to clean seed data before every test.
+
 ## Deploy to Google Cloud (Agent Engine)
 
 ```bash
@@ -132,8 +163,11 @@ marketplace_support_agent/        # ADK agent package
 │   ├── verification.py           # contact match + OTP (demo: 4242)
 │   └── support.py                # policies, investigations, goodwill, escalation
 ├── .env.example                  # Vertex AI config template
+tests/                            # tool tests, incl. the identity-verification suite
 TRAINING_QUESTIONNAIRE.md         # the 73 scenarios
 TRAINING_DECISIONS.md             # the 73 rulings (source of truth)
+LICENSE                           # MIT
+.github/workflows/ci.yml          # runs the suite on every push
 deploy.sh                         # adk deploy agent_engine
 ```
 

@@ -10,6 +10,11 @@ from ..data_store import ACCOUNT, ORDERS
 DEMO_OTP = "4242"
 
 
+def _digits(value: str) -> str:
+    """Keep only digits, so "+91 98123 04242" and "9812304242" compare equal."""
+    return "".join(ch for ch in value if ch.isdigit())
+
+
 def verify_customer_contact(order_id: str, email_or_phone: str) -> dict:
     """Verify the customer's email or phone matches the order, allowing order
     details to be shared (read-level verification).
@@ -26,9 +31,19 @@ def verify_customer_contact(order_id: str, email_or_phone: str) -> dict:
     if not order:
         return {"status": "error", "message": f"No order found with ID '{order_id}'."}
     given = email_or_phone.strip().lower()
-    matches = given == order["customer_email"] or given.endswith(
-        ACCOUNT["registered_phone_last4"]
+    # Email must match in full. Phone must match the FULL registered number,
+    # not just its last 4 digits — an endswith("4242") check let any number
+    # ending 4242 (or the bare string "4242") pass, which is an identity
+    # bypass. A phone-shaped input needs at least 10 digits to be considered.
+    email_match = bool(given) and given == order["customer_email"].lower()
+    given_digits = _digits(given)
+    registered_digits = _digits(ACCOUNT.get("registered_phone", ""))
+    phone_match = (
+        len(given_digits) >= 10
+        and bool(registered_digits)
+        and given_digits == registered_digits
     )
+    matches = email_match or phone_match
     return {
         "status": "success",
         "verified": matches,

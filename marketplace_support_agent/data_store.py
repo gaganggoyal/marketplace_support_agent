@@ -145,6 +145,7 @@ POLICIES = {
 # customer/risk platform.
 ACCOUNT = {
     "customer_email": "demo.customer@example.com",
+    "registered_phone": "+919812304242",
     "registered_phone_last4": "4242",
     "account_age_years": 15,
     "return_rate_percent": 4,
